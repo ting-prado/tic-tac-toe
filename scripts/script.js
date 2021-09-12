@@ -18,7 +18,8 @@ const Gameboard = (() => {
 
     const drawBoard = e => {
         let index = e.target.id.slice(3,5);
-        boardArr[index] = 'X';
+        const arr = ['X', 'O'];
+        boardArr[index] = arr[Math.floor(Math.random() * 2)];
         updateGameboard();
     }
 

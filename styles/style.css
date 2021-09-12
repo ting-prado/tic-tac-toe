@@ -1,11 +1,17 @@
+@font-face {
+    font-family: 'pencil';
+    src: url('../resources/h-b-sketch-demo.regular.otf');
+}
+
 h1 {
     margin: 0.3em 0 0.5em 0;
     text-align: center;
-    font-size: 48px;
+    font-size: 60px;
+    color: darkcyan;
+    font-family: 'pencil';
 }
 
 #gameboard {
-    border: 1px solid black;
     width: 35%;
     height: 75vh;
     margin: 1em auto 0 auto;
@@ -14,11 +20,15 @@ h1 {
 }
 
 .box {
+    background: url('../resources/grid_paper3-01.webp');
     box-sizing: border-box;
     width: calc(100%/3);
     height: calc(75vh/3);
-    border: 1px solid black;
+    border: 1px solid darkcyan;
     text-align: center;
     padding: 0.1em;
     font-size: 7em;
+    font-family: 'pencil';
+    color: grey;
+    user-select: none;
 }
