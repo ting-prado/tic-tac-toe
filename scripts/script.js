@@ -4,9 +4,7 @@ const aiGameflow = () => {
 
 const gameboard = (() => {
     const boardArr = [];
-    for(let i=0; i<=8; i++){
-        boardArr.push(null);
-    }
+    boardArr.length = 9;
 
     const gridboxes = document.querySelectorAll('.box');
     const updateGameboard = () => {
@@ -26,7 +24,9 @@ const Player = (name,sign) => {
         gameboard.boardArr[index] = sign;
     }
 
-    return {getName, getSign, drawSign}
+    let occupiedGrids = [];
+
+    return {getName, getSign, drawSign, occupiedGrids}
 }
 
 const playersGameflow = (() => {
@@ -36,14 +36,32 @@ const playersGameflow = (() => {
 
     const drawBoard = e => {
         let index = e.target.id.slice(3,5);
-        currentPlayer.drawSign(index, currentPlayer.getSign());
-        gameboard.updateGameboard();
+        let board = gameboard.boardArr;
+        if(board[index] == undefined){
+            currentPlayer.drawSign(index, currentPlayer.getSign());
+            currentPlayer.occupiedGrids.push(index);
+            gameboard.updateGameboard();
+            winnerChecker(currentPlayer.getName(), currentPlayer.occupiedGrids);
 
-        if(currentPlayer == player1){
-            currentPlayer = player2;
+            if(currentPlayer == player1){
+                currentPlayer = player2;
+            }
+            else{
+                currentPlayer = player1;
+            }
         }
-        else{
-            currentPlayer = player1;
+    }
+
+    const winnerChecker = (name,grids) => {
+        if((grids.includes('0') && grids.includes('1') && grids.includes('2')) ||
+        (grids.includes('0') && grids.includes('3') && grids.includes('6')) ||
+        (grids.includes('0') && grids.includes('4') && grids.includes('8')) ||
+        (grids.includes('1') && grids.includes('4') && grids.includes('7')) ||
+        (grids.includes('2') && grids.includes('5') && grids.includes('8')) ||
+        (grids.includes('2') && grids.includes('4') && grids.includes('6')) ||
+        (grids.includes('3') && grids.includes('4') && grids.includes('5')) ||
+        (grids.includes('6') && grids.includes('7') && grids.includes('8'))){
+            //winning effect
         }
     }
 
