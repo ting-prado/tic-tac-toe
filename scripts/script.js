@@ -24,7 +24,6 @@ const Player = (name,sign) => {
 
     const drawSign = (index,sign) => {
         gameboard.boardArr[index] = sign;
-        gameboard.updateGameboard();
     }
 
     return {getName, getSign, drawSign}
@@ -35,13 +34,21 @@ const playersGameflow = (() => {
     const player2 = Player('computer', 'O');
     let currentPlayer = player1;
 
-    const getIndex = e => {
+    const drawBoard = e => {
         let index = e.target.id.slice(3,5);
         currentPlayer.drawSign(index, currentPlayer.getSign());
+        gameboard.updateGameboard();
+
+        if(currentPlayer == player1){
+            currentPlayer = player2;
+        }
+        else{
+            currentPlayer = player1;
+        }
     }
 
     gameboard.gridboxes.forEach(box => {
-        box.addEventListener('click', getIndex);
+        box.addEventListener('click', drawBoard);
     });
 })();
 
