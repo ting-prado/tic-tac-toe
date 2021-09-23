@@ -8,7 +8,7 @@ h1 {
     text-align: center;
     font-size: 60px;
     color: darkcyan;
-    font-family: 'pencil';
+    font-family: 'pencil', sans-serif;
     user-select: none;
 }
 
@@ -25,10 +25,10 @@ h1 {
 }
 
 .choice {
-    display: none; 
+    display: flex; 
     user-select: none;
     padding: 5px;
-    font-family: 'pencil';
+    font-family: 'pencil', sans-serif;
     font-size: 2em;
     margin: 0.5em 1em;
     border: 1px dashed grey;
@@ -41,11 +41,47 @@ h1 {
     cursor: pointer;
 }
 
+.playerNamesCont {
+    display: flex;
+    user-select: none;
+    color: black;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'pencil', sans-serif;
+}
+
+#startBtn {
+    user-select: none;
+    margin-top: 2em;
+    font-family: inherit;
+    background: rgb(16, 204, 204);
+    color: rgb(39, 39, 39);
+    font-size: 20px;
+    border: none;
+    height: 2em;
+    border-radius: 5px;
+    box-shadow: -3px 3px silver;
+}
+
+#startBtn:hover {
+    cursor: pointer;
+    background: rgb(19, 226, 226);
+    color: black;
+    box-shadow: -3px 3px gray;
+}
+
+.playersInput {
+    display: inline-block;
+    width: 10em;
+    margin: 1em;
+}
+
 #gameboard {
     width: 35%;
     height: 75vh;
     margin: 0.5em auto 0 auto;
-    display: flex;
+    display: none;
     flex-wrap: wrap;
 }
 

@@ -1,9 +1,7 @@
-const aiGameflow = () => {
-
-}
-
 const gameboard = (() => {
     const boardArr = [];
+    const board = document.querySelector('#gameboard');
+
     boardArr.length = 9;
 
     const gridboxes = document.querySelectorAll('.box');
@@ -13,7 +11,7 @@ const gameboard = (() => {
         }
     }
     
-    return {boardArr, gridboxes, updateGameboard}
+    return {boardArr, board, gridboxes, updateGameboard}
 })();
 
 const Player = (name,sign) => {
@@ -29,7 +27,17 @@ const Player = (name,sign) => {
     return {getName, getSign, drawSign, occupiedGrids}
 }
 
-const playersGameflow = (() => {
+const aiGameflow = () => {
+
+}
+
+const playersGameflow = () => {
+    const displayChanges = (() => {
+        const players = document.querySelector('.playerNamesCont');
+        players.setAttribute('style', 'display: none');
+        gameboard.board.setAttribute('style', 'display: flex');
+    })();
+
     const player1 = Player('human', 'X');
     const player2 = Player('computer', 'O');
     let currentPlayer = player1;
@@ -62,26 +70,53 @@ const playersGameflow = (() => {
         (grids.includes('3') && grids.includes('4') && grids.includes('5')) ||
         (grids.includes('6') && grids.includes('7') && grids.includes('8'))){
             //winning effect
+            console.log(`${name} wins!`);
         }
     }
 
     gameboard.gridboxes.forEach(box => {
         box.addEventListener('click', drawBoard);
     });
+};
+
+const displayChanges = (() => {
+    const humanChoice = document.querySelector('#human');
+    const compChoice = document.querySelector('#computer');
+    const choices = document.querySelectorAll('#choices');
+
+    const namesInput = () => {
+        choices.forEach(choice => {
+            choice.setAttribute('style', 'display: none');
+        });
+        const player1 = document.createElement('input');
+        const label1 = document.createElement('label');
+        const player2 = document.createElement('input');
+        const label2 = document.createElement('label');
+        const playersDiv = document.createElement('div');
+        const startBtn = document.createElement('button');
+        const body = document.querySelector('body');
+
+        playersDiv.classList.add('playerNamesCont');
+        player1.setAttribute('id', 'player1');
+        player1.classList.add('playersInput');
+        player2.setAttribute('id', 'player2');
+        player2.classList.add('playersInput');
+        label1.setAttribute('for', 'player1');
+        label2.setAttribute('for', 'player2');
+        startBtn.setAttribute('id', 'startBtn');
+        label1.textContent = 'Player 1: ';
+        label2.textContent = 'Player 2: ';
+        startBtn.textContent = 'Start Game';
+        body.appendChild(playersDiv);
+        playersDiv.appendChild(label1);
+        label1.appendChild(player1);
+        playersDiv.appendChild(label2);
+        label2.appendChild(player2);
+        playersDiv.appendChild(startBtn);
+
+        startBtn.addEventListener('click', playersGameflow);
+    }
+
+    compChoice.addEventListener('click', aiGameflow);
+    humanChoice.addEventListener('click', namesInput);
 })();
-
-// const displayChanges = (() => {
-//     const humanChoice = document.querySelector('#human');
-//     const compChoice = document.querySelector('#computer');
-//     const choices = document.querySelectorAll('#choices');
-
-//     const namesInput = () => {
-//         choices.forEach(choice => {
-//             choice.setAttribute('style', 'display: none');
-//         });
-//     }
-
-//     humanChoice.addEventListener('click', playersGameflow);
-//     compChoice.addEventListener('click', aiGameflow);
-//     humanChoice.addEventListener('click', namesInput);
-// })();
