@@ -38,8 +38,15 @@ const playersGameflow = () => {
         gameboard.board.setAttribute('style', 'display: flex');
     })();
 
-    const player1 = Player('human', 'X');
-    const player2 = Player('computer', 'O');
+    const getNames = (() => {
+        const input1 = document.querySelector('#player1').value;
+        const input2 = document.querySelector('#player2').value;
+
+        return {input1, input2}
+    })();
+
+    const player1 = Player(getNames.input1, 'X');
+    const player2 = Player(getNames.input2, 'O');
     let currentPlayer = player1;
 
     const drawBoard = e => {
