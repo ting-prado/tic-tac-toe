@@ -27,8 +27,54 @@ const Player = (name,sign) => {
     return {getName, getSign, drawSign, occupiedGrids}
 }
 
-const aiGameflow = () => {
+const winnerChecker = (name,grids) => {
+    if((grids.includes('0') && grids.includes('1') && grids.includes('2')) ||
+    (grids.includes('0') && grids.includes('3') && grids.includes('6')) ||
+    (grids.includes('0') && grids.includes('4') && grids.includes('8')) ||
+    (grids.includes('1') && grids.includes('4') && grids.includes('7')) ||
+    (grids.includes('2') && grids.includes('5') && grids.includes('8')) ||
+    (grids.includes('2') && grids.includes('4') && grids.includes('6')) ||
+    (grids.includes('3') && grids.includes('4') && grids.includes('5')) ||
+    (grids.includes('6') && grids.includes('7') && grids.includes('8'))){
+        //winning effect
+        //add restart option
+        console.log(`${name} wins!`);
+    }
+}
 
+const aiGameflow = () => {
+    const displayChanges = (() => {
+        const players = document.querySelector('.playerNamesCont');
+        players.setAttribute('style', 'display: none');
+        gameboard.board.setAttribute('style', 'display: flex');
+    })();
+
+    const player = Player(document.querySelector('#player').value, 'X');
+    const computer = Player('Computer', 'O');
+
+    const playerDraw = e => {
+        let index = e.target.id.slice(3,5);
+        let board = gameboard.boardArr;
+        if(board[index] == undefined){
+            currentTurn.drawSign(index, currentTurn.getSign());
+            currentTurn.occupiedGrids.push(index);
+            gameboard.updateGameboard();
+            winnerChecker(currentTurn.getName(), currentPlayer.occupiedGrids);
+        }
+    }
+
+    const aiDraw = () => {
+        //get index through minimax algorithm
+        //drawSign
+        //push sign to array
+        //wait for 1s to update gameboard
+        //winner checker
+    }
+
+    gameboard.gridboxes.forEach(box => {
+        box.addEventListener('click', playerDraw);
+        box.addEventListener('click', aiDraw);
+    });
 }
 
 const playersGameflow = () => {
@@ -67,20 +113,6 @@ const playersGameflow = () => {
         }
     }
 
-    const winnerChecker = (name,grids) => {
-        if((grids.includes('0') && grids.includes('1') && grids.includes('2')) ||
-        (grids.includes('0') && grids.includes('3') && grids.includes('6')) ||
-        (grids.includes('0') && grids.includes('4') && grids.includes('8')) ||
-        (grids.includes('1') && grids.includes('4') && grids.includes('7')) ||
-        (grids.includes('2') && grids.includes('5') && grids.includes('8')) ||
-        (grids.includes('2') && grids.includes('4') && grids.includes('6')) ||
-        (grids.includes('3') && grids.includes('4') && grids.includes('5')) ||
-        (grids.includes('6') && grids.includes('7') && grids.includes('8'))){
-            //winning effect
-            console.log(`${name} wins!`);
-        }
-    }
-
     gameboard.gridboxes.forEach(box => {
         box.addEventListener('click', drawBoard);
     });
@@ -91,7 +123,33 @@ const displayChanges = (() => {
     const compChoice = document.querySelector('#computer');
     const choices = document.querySelectorAll('#choices');
 
-    const namesInput = () => {
+    const aiNameInput= () => {
+        choices.forEach(choice => {
+            choice.setAttribute('style', 'display: none');
+        });
+        const playersDiv = document.createElement('div');
+        const body = document.querySelector('body');
+        const player = document.createElement('input');
+        const label = document.createElement('label');
+        const startBtn = document.createElement('button');
+
+        playersDiv.classList.add('playerNamesCont');
+        player.setAttribute('id', 'player');
+        label.setAttribute('for', 'player');
+        label.setAttribute('id', 'ailabel');
+        startBtn.setAttribute('id', 'startBtn');
+        label.textContent = 'Player: ';
+        startBtn.textContent = 'Start Game';
+
+        body.appendChild(playersDiv);
+        playersDiv.appendChild(label);
+        label.appendChild(player);
+        playersDiv.appendChild(startBtn);
+
+        startBtn.addEventListener('click', aiGameflow);
+    }
+
+    const playerNamesInput = () => {
         choices.forEach(choice => {
             choice.setAttribute('style', 'display: none');
         });
@@ -124,6 +182,6 @@ const displayChanges = (() => {
         startBtn.addEventListener('click', playersGameflow);
     }
 
-    compChoice.addEventListener('click', aiGameflow);
-    humanChoice.addEventListener('click', namesInput);
+    compChoice.addEventListener('click', aiNameInput);
+    humanChoice.addEventListener('click', playerNamesInput);
 })();

@@ -59,7 +59,7 @@ h1 {
 #startBtn {
     user-select: none;
     margin-top: 2em;
-    font-family: inherit;
+    font-family: 'pencil', sans-serif;
     background: rgb(16, 204, 204);
     color: black;
     font-size: 20px;
@@ -76,7 +76,14 @@ h1 {
     box-shadow: -3px 3px gray;
 }
 
-.playersInput {
+#ailabel {
+    font-size: 24px;
+    font-family: 'pencil', sans-serif;
+    text-align: center;
+    display: block;
+}
+
+.playersInput, #player {
     display: inline-block;
     width: 8em;
     margin: 1em;
