@@ -1,16 +1,26 @@
 const gameboard = (() => {
-    const boardArr = [];
+    const boardArr = [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""]
+    ];
     const board = document.querySelector('#gameboard');
-
-    boardArr.length = 9;
 
     const gridboxes = document.querySelectorAll('.box');
     const updateGameboard = () => {
-        for(let i=0; i<=8; i++){
-            gridboxes[i].textContent = boardArr[i];
+        let i=0,
+        j=0;
+
+        while(i<=8){
+            for(let k=0; k<=2; k++){
+                gridboxes[i].textContent = boardArr[j][k];
+                i++;
+            }
+            j++;
+            k=0;
         }
     }
-    
+
     return {boardArr, board, gridboxes, updateGameboard}
 })();
 
@@ -40,6 +50,9 @@ const winnerChecker = (name,grids) => {
         //add restart option
         console.log(`${name} wins!`);
     }
+    // else if(){
+    //     //if array is full but game is tied
+    // }
 }
 
 const aiGameflow = () => {
@@ -56,10 +69,10 @@ const aiGameflow = () => {
         let index = e.target.id.slice(3,5);
         let board = gameboard.boardArr;
         if(board[index] == undefined){
-            currentTurn.drawSign(index, currentTurn.getSign());
-            currentTurn.occupiedGrids.push(index);
+            player.drawSign(index, player.getSign());
+            player.occupiedGrids.push(index);
             gameboard.updateGameboard();
-            winnerChecker(currentTurn.getName(), currentPlayer.occupiedGrids);
+            winnerChecker(player.getName(), player.occupiedGrids);
         }
     }
 
