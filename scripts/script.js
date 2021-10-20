@@ -28,35 +28,57 @@ const Player = (name,sign) => {
     const getName = () => name;
     const getSign = () => sign;
 
-    const drawSign = (index,sign) => {
-        gameboard.boardArr[index] = sign;
+    const drawSign = (row,column,sign) => {
+        gameboard.boardArr[row][column] = sign;
     }
 
-    let occupiedGrids = [];
-
-    return {getName, getSign, drawSign, occupiedGrids}
+    return {getName, getSign, drawSign}
 }
 
-const winnerChecker = (name,grids) => {
-    if((grids.includes('0') && grids.includes('1') && grids.includes('2')) ||
-    (grids.includes('0') && grids.includes('3') && grids.includes('6')) ||
-    (grids.includes('0') && grids.includes('4') && grids.includes('8')) ||
-    (grids.includes('1') && grids.includes('4') && grids.includes('7')) ||
-    (grids.includes('2') && grids.includes('5') && grids.includes('8')) ||
-    (grids.includes('2') && grids.includes('4') && grids.includes('6')) ||
-    (grids.includes('3') && grids.includes('4') && grids.includes('5')) ||
-    (grids.includes('6') && grids.includes('7') && grids.includes('8'))){
-        //winning effect
-        //add restart option
-        console.log(`${name} wins!`);
+const winnerChecker = (round, name) => {
+    let won = false,
+        sequence = '';
+
+    const checkStr = str => {
+        if(str == 'XXX' || str == 'OOO'){
+            won = true;
+        }
     }
-    // else if(){
-    //     //if array is full but game is tied
-    // }
+
+    if(won == false && round == 9){ //Game tied
+        console.log('No one won.');
+    }
+
+    for(let i=0; i<=2; i++){ //Horizontal checker
+        for(let j=0; j<=2; j++){
+            sequence += gameboard.boardArr[i][j];
+        }
+        checkStr(sequence);
+    }
+
+    for(let i=0; i<=2; i++){ //Vertical checker
+        sequence = '';
+        for(let j=0; j<=2; j++){
+            sequence += gameboard.boardArr[j][i];
+        }
+        checkStr(sequence);
+    }
+
+    sequence = '';
+    for(let i=2, j=0; i>=0; i--, j++){ //Diagonal(RtL) checker
+        sequence += gameboard.boardArr[j][i];
+    }
+    checkStr(sequence);
+
+    sequence = '';
+    for(let i=0; i<=2; i++){ //Diagonal(LtR) checker
+        sequence += gameboard.boardArr[i][i];
+    }
+    checkStr(sequence);
 }
 
 const aiGameflow = () => {
-    const displayChanges = (() => {
+const displayChanges = (() => {
         const players = document.querySelector('.playerNamesCont');
         players.setAttribute('style', 'display: none');
         gameboard.board.setAttribute('style', 'display: flex');
@@ -66,13 +88,13 @@ const aiGameflow = () => {
     const computer = Player('Computer', 'O');
 
     const playerDraw = e => {
-        let index = e.target.id.slice(3,5);
+        let row = e.target.id.slice(3,4);
+        let column = e.target.id.slice(4,5);
         let board = gameboard.boardArr;
-        if(board[index] == undefined){
-            player.drawSign(index, player.getSign());
-            player.occupiedGrids.push(index);
+        if(board[row][column] == undefined){
+            player.drawSign(row, column, player.getSign());
             gameboard.updateGameboard();
-            winnerChecker(player.getName(), player.occupiedGrids);
+            winnerChecker(round, player.getName());
         }
     }
 
@@ -106,17 +128,19 @@ const playersGameflow = () => {
 
     const player1 = Player(getNames.input1, 'X');
     const player2 = Player(getNames.input2, 'O');
-    let currentPlayer = player1;
+    let currentPlayer = player1,
+        round = 1;
 
     const drawBoard = e => {
-        let index = e.target.id.slice(3,5);
+        let row = e.target.id.slice(3,4);
+        let column = e.target.id.slice(4,5);
         let board = gameboard.boardArr;
-        if(board[index] == undefined){
-            currentPlayer.drawSign(index, currentPlayer.getSign());
-            currentPlayer.occupiedGrids.push(index);
+        if(board[row][column] == ""){
+            currentPlayer.drawSign(row, column, currentPlayer.getSign());
             gameboard.updateGameboard();
-            winnerChecker(currentPlayer.getName(), currentPlayer.occupiedGrids);
-
+            winnerChecker(round, currentPlayer.getName());
+            round++;
+        }
             if(currentPlayer == player1){
                 currentPlayer = player2;
             }
@@ -124,12 +148,11 @@ const playersGameflow = () => {
                 currentPlayer = player1;
             }
         }
-    }
 
     gameboard.gridboxes.forEach(box => {
         box.addEventListener('click', drawBoard);
     });
-};
+}
 
 const displayChanges = (() => {
     const humanChoice = document.querySelector('#human');
