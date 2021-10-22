@@ -35,6 +35,53 @@ const Player = (name,sign) => {
     return {getName, getSign, drawSign}
 }
 
+const endGame = winner => {
+    const title = document.querySelector('h1');
+
+    const restart = () => {
+        for(let i=0; i<=2; i++){ //Horizontal checker
+            for(let j=0; j<=2; j++){
+                gameboard.boardArr[i][j] = "";
+            }
+        }
+        gameboard.updateGameboard();
+        playersGameflow();
+
+        const div = document.getElementById('gameoverDiv');
+        div.remove();
+        title.setAttribute('style','filter: opacity(1) blur(0)');
+
+    }
+    
+    const display = (() => {
+        gameboard.board.setAttribute('style','filter: opacity(0.5) blur(2px); display: flex');
+        title.setAttribute('style','filter: opacity(0.5) blur(2px)');
+
+        const body = document.querySelector('body');
+        const div = document.createElement('div');
+        const par = document.createElement('p');
+        const restartBtn = document.createElement('button');
+        div.setAttribute('id','gameoverDiv');
+        restartBtn.textContent = 'Restart?';
+        div.classList.add('finalDiv');
+        restartBtn.classList.add('restartBtn');
+        par.classList.add('resultMessage');
+
+        if(winner != undefined) {
+            par.textContent = `${winner} won!`;
+        }
+        else{
+            par.textContent = "It's a tie.";
+        }
+
+        body.appendChild(div);
+        div.appendChild(par);
+        div.appendChild(restartBtn);
+
+        restartBtn.addEventListener('click', restart);
+    })();
+}
+
 const winnerChecker = (round, name) => {
     let won = false,
         sequence = '';
@@ -42,11 +89,14 @@ const winnerChecker = (round, name) => {
     const checkStr = str => {
         if(str == 'XXX' || str == 'OOO'){
             won = true;
+            if(won == true){
+                endGame(name);
+            }
         }
     }
 
     if(won == false && round == 9){ //Game tied
-        console.log('No one won.');
+        endGame();
     }
 
     for(let i=0; i<=2; i++){ //Horizontal checker
@@ -140,7 +190,7 @@ const playersGameflow = () => {
             gameboard.updateGameboard();
             winnerChecker(round, currentPlayer.getName());
             round++;
-        }
+
             if(currentPlayer == player1){
                 currentPlayer = player2;
             }
@@ -148,10 +198,13 @@ const playersGameflow = () => {
                 currentPlayer = player1;
             }
         }
+    }
 
     gameboard.gridboxes.forEach(box => {
         box.addEventListener('click', drawBoard);
     });
+
+    return {currentPlayer};
 }
 
 const displayChanges = (() => {

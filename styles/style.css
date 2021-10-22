@@ -122,3 +122,51 @@ input#player1.playersInput {
     color: rgb(68, 67, 67);
     user-select: none;
 }
+
+.finalDiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation-name: fade;
+    animation-duration: 1.5s;
+    width: 15em;
+    height: 10em;
+    background: rgb(223, 219, 219);
+    box-shadow: 6px 6px 4px gray;
+    top: 30vh;
+    left: 40%;
+    position: absolute;
+    border-radius: 5px;
+}
+
+@keyframes fade {
+    0% {
+        opacity: 0.1;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+.resultMessage {
+    font-family: 'handwritten', cursive;
+    font-size: 36px;
+    margin: 0.65em;
+    font-weight: bold;
+}
+
+.restartBtn {
+    width: 6em;
+    height: 2.5em;
+    background: rgb(87, 164, 167);
+    box-shadow: 4px 4px gray;
+    border: 0;
+    font-size: 18px;
+    font-family: cursive;
+    border-radius: 5px;
+}
+
+.restartBtn:hover {
+    cursor: pointer;
+    background: rgb(100, 184, 184);
+}
