@@ -1,3 +1,5 @@
+let won = false;
+
 const gameboard = (() => {
     const boardArr = [
         ["", "", ""],
@@ -45,6 +47,7 @@ const endGame = winner => {
             }
         }
         gameboard.updateGameboard();
+        won = false;
         playersGameflow();
 
         const div = document.getElementById('gameoverDiv');
@@ -83,8 +86,7 @@ const endGame = winner => {
 }
 
 const winnerChecker = (round, name) => {
-    let won = false,
-        sequence = '';
+    let sequence = '';
 
     const checkStr = str => {
         if(str == 'XXX' || str == 'OOO'){
@@ -190,6 +192,11 @@ const playersGameflow = () => {
             gameboard.updateGameboard();
             winnerChecker(round, currentPlayer.getName());
             round++;
+            if(won == true) {
+                gameboard.gridboxes.forEach(box => {
+                    box.removeEventListener('click', drawBoard);
+                });
+            }
 
             if(currentPlayer == player1){
                 currentPlayer = player2;
@@ -203,8 +210,6 @@ const playersGameflow = () => {
     gameboard.gridboxes.forEach(box => {
         box.addEventListener('click', drawBoard);
     });
-
-    return {currentPlayer};
 }
 
 const displayChanges = (() => {
