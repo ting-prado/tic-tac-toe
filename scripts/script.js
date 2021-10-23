@@ -177,7 +177,7 @@ const playersGameflow = () => {
     const getNames = (() => {
         const input1 = document.querySelector('#player1').value;
         const input2 = document.querySelector('#player2').value;
-
+        
         return {input1, input2}
     })();
 
@@ -243,7 +243,14 @@ const displayChanges = (() => {
         label.appendChild(player);
         playersDiv.appendChild(startBtn);
 
-        startBtn.addEventListener('click', aiGameflow);
+        startBtn.addEventListener('click', function() {
+            if(player.value != ""){
+                aiGameflow();
+            }
+            else {
+                alert('Please enter your name correctly.');
+            }
+        });
     }
 
     const playerNamesInput = () => {
@@ -276,7 +283,14 @@ const displayChanges = (() => {
         label2.appendChild(player2);
         playersDiv.appendChild(startBtn);
 
-        startBtn.addEventListener('click', playersGameflow);
+        startBtn.addEventListener('click', function(){
+            if(player1.value != "" || player2.value != ""){
+                playersGameflow();
+            }
+            else {
+                alert('Please enter your names correctly.');
+            }
+        });
     }
 
     compChoice.addEventListener('click', aiNameInput);

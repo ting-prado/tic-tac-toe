@@ -1,7 +1,8 @@
 body {
-    background: url('../resources/triangle-pattern-with-connecting-lines-dots_1048-7800.jpg');
-    background-position: center;
+    background: url('../resources/v849-nunny-36.jpg');
     text-align: center;
+    background-size: cover;
+    height: 100vh;
 }
 
 @font-face {
@@ -15,15 +16,14 @@ body {
 }
 
 h1 {
-    padding: 0.1em;
+    background: none;
     margin-top: 0.5em;
     display: inline-block;
     text-align: center;
     font-size: 72px;
-    color: darkcyan;
+    color: #0c4576;
     font-family: 'pencil', sans-serif;
     user-select: none;
-    background: white;
 }
 
 .nameInputs {
@@ -43,7 +43,7 @@ h1 {
     padding: 0.2em;
     font-family: 'pencil', sans-serif;
     font-size: 2em;
-    background: white;
+    background: none;
     margin: 1em 1em;
 }
 
@@ -57,7 +57,7 @@ h1 {
     display: flex;
     margin-top: 1em;
     user-select: none;
-    color: black;
+    color: rgb(0 18 34);
     width: 100%;
     flex-direction: column;
     align-items: center;
@@ -67,9 +67,9 @@ h1 {
 #startBtn {
     user-select: none;
     margin-top: 2em;
-    font-family: 'pencil', sans-serif;
-    background: rgb(16, 204, 204);
-    color: black;
+    font-family: 'handwritten', sans-serif;
+    background: #3148af;
+    color: #ededed;
     font-size: 20px;
     border: none;
     height: 2em;
@@ -79,8 +79,8 @@ h1 {
 
 #startBtn:hover {
     cursor: pointer;
-    background: rgb(19, 226, 226);
-    color: black;
+    background: #193277;
+    color: #ededed;
     box-shadow: -3px 3px gray;
 }
 
@@ -107,7 +107,7 @@ input#player1.playersInput {
 
 .playerNamesCont label {
     font-size: 24px;
-    background: white;
+    background: none;
 }
 
 #gameboard {
@@ -128,7 +128,7 @@ input#player1.playersInput {
     padding: 0.1em;
     font-size: 7em;
     font-family: 'pencil';
-    color: rgb(68, 67, 67);
+    color: #2d3c5e;
     user-select: none;
 }
 
@@ -140,7 +140,7 @@ input#player1.playersInput {
     animation-duration: 1.2s;
     width: 15em;
     height: 10em;
-    background: rgb(223, 219, 219);
+    background: #ededed;
     box-shadow: 6px 6px 4px gray;
     top: 30vh;
     left: 40%;
@@ -162,12 +162,14 @@ input#player1.playersInput {
     font-size: 36px;
     margin: 0.65em;
     font-weight: bold;
+    color: darkblue;
 }
 
 .restartBtn {
     width: 6em;
     height: 2.5em;
-    background: rgb(87, 164, 167);
+    background: #3148af;
+    color: #ededed;
     box-shadow: 4px 4px gray;
     border: 0;
     font-size: 18px;
@@ -177,5 +179,5 @@ input#player1.playersInput {
 
 .restartBtn:hover {
     cursor: pointer;
-    background: rgb(100, 184, 184);
+    background: #193277;
 }
