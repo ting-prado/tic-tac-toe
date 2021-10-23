@@ -1,3 +1,9 @@
+body {
+    background: url('../resources/triangle-pattern-with-connecting-lines-dots_1048-7800.jpg');
+    background-position: center;
+    text-align: center;
+}
+
 @font-face {
     font-family: 'pencil';
     src: url('../resources/h-b-sketch-demo.regular.otf');
@@ -5,16 +11,19 @@
 
 @font-face {
     font-family: 'handwritten';
-    src: url('../resources/Please\ write\ me\ a\ song.ttf');
+    src: url('../resources/Warung\ Kopi.otf');
 }
 
 h1 {
-    margin: 0.5em 0 0.5em 0;
+    padding: 0.1em;
+    margin-top: 0.5em;
+    display: inline-block;
     text-align: center;
     font-size: 72px;
     color: darkcyan;
     font-family: 'pencil', sans-serif;
     user-select: none;
+    background: white;
 }
 
 .nameInputs {
@@ -30,24 +39,23 @@ h1 {
 }
 
 .choice {
-    display: flex; 
     user-select: none;
-    padding: 5px;
+    padding: 0.2em;
     font-family: 'pencil', sans-serif;
     font-size: 2em;
-    margin: 0.5em 1em;
-    border: 1px dashed grey;
+    background: white;
+    margin: 1em 1em;
 }
 
 .choice:hover {
-    background: silver;
-    opacity: 0.9;
+    box-shadow: 0.1em 0.1em silver;
     transform: scale(1.1);
     cursor: pointer;
 }
 
 .playerNamesCont {
     display: flex;
+    margin-top: 1em;
     user-select: none;
     color: black;
     width: 100%;
@@ -99,12 +107,13 @@ input#player1.playersInput {
 
 .playerNamesCont label {
     font-size: 24px;
+    background: white;
 }
 
 #gameboard {
     width: 35%;
     height: 75vh;
-    margin: -1em auto 0 auto;
+    margin: 0.8em auto 0 auto;
     display: none;
     flex-wrap: wrap;
 }

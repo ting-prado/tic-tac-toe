@@ -39,6 +39,7 @@ const Player = (name,sign) => {
 
 const endGame = winner => {
     const title = document.querySelector('h1');
+    const body = document.querySelector('body');
 
     const restart = () => {
         for(let i=0; i<=2; i++){ //Reset array values to ""
@@ -53,14 +54,14 @@ const endGame = winner => {
         const div = document.getElementById('gameoverDiv');
         div.remove();
         title.setAttribute('style','filter: opacity(1) blur(0)');
-
+        body.setAttribute('style','backdrop-filter: blur(0)');
     }
     
     const display = (() => {
         gameboard.board.setAttribute('style','filter: opacity(0.5) blur(2px); display: flex');
         title.setAttribute('style','filter: opacity(0.5) blur(2px)');
+        body.setAttribute('style','backdrop-filter: blur(2px)');
 
-        const body = document.querySelector('body');
         const div = document.createElement('div');
         const par = document.createElement('p');
         const restartBtn = document.createElement('button');
