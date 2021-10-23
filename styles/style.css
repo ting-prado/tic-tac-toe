@@ -128,7 +128,7 @@ input#player1.playersInput {
     flex-direction: column;
     align-items: center;
     animation-name: fade;
-    animation-duration: 1.5s;
+    animation-duration: 1.2s;
     width: 15em;
     height: 10em;
     background: rgb(223, 219, 219);

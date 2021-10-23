@@ -41,7 +41,7 @@ const endGame = winner => {
     const title = document.querySelector('h1');
 
     const restart = () => {
-        for(let i=0; i<=2; i++){ //Horizontal checker
+        for(let i=0; i<=2; i++){ //Reset array values to ""
             for(let j=0; j<=2; j++){
                 gameboard.boardArr[i][j] = "";
             }
@@ -98,10 +98,12 @@ const winnerChecker = (round, name) => {
     }
 
     if(won == false && round == 9){ //Game tied
+        won = 'tied';
         endGame();
     }
 
     for(let i=0; i<=2; i++){ //Horizontal checker
+        sequence = '';
         for(let j=0; j<=2; j++){
             sequence += gameboard.boardArr[i][j];
         }
@@ -192,7 +194,7 @@ const playersGameflow = () => {
             gameboard.updateGameboard();
             winnerChecker(round, currentPlayer.getName());
             round++;
-            if(won == true) {
+            if(won == true || won == 'tied') {
                 gameboard.gridboxes.forEach(box => {
                     box.removeEventListener('click', drawBoard);
                 });
