@@ -21,7 +21,7 @@ h1 {
     display: inline-block;
     text-align: center;
     font-size: 72px;
-    color: #0c4576;
+    color: #2e3852;
     font-family: 'pencil', sans-serif;
     user-select: none;
 }
@@ -45,10 +45,13 @@ h1 {
     font-size: 2em;
     background: none;
     margin: 1em 1em;
+    border-radius: 10px;
+    border: 1px outset darkgrey;
+    color: #202636;
 }
 
 .choice:hover {
-    box-shadow: 0.1em 0.1em silver;
+    box-shadow: 0.1em 0.1em darkgrey;
     transform: scale(1.1);
     cursor: pointer;
 }
@@ -68,20 +71,20 @@ h1 {
     user-select: none;
     margin-top: 2em;
     font-family: 'handwritten', sans-serif;
-    background: #3148af;
+    background: #595280;
     color: #ededed;
     font-size: 20px;
     border: none;
     height: 2em;
     border-radius: 5px;
-    box-shadow: -3px 3px silver;
+    box-shadow: 3px 3px silver;
 }
 
 #startBtn:hover {
     cursor: pointer;
-    background: #193277;
+    background: #3f3a61;
     color: #ededed;
-    box-shadow: -3px 3px gray;
+    box-shadow: 3px 3px gray;
 }
 
 #ailabel {
@@ -119,16 +122,17 @@ input#player1.playersInput {
 }
 
 .box {
-    background: url('../resources/grid_paper3-01.webp');
+    background: url('../resources/5d2ad0ffb80190c521443db7a21e63.jpg');
+    background-position: 13.5% 3.5%;
     box-sizing: border-box;
     width: calc(100%/3);
     height: calc(75vh/3);
-    border: 1px solid darkcyan;
+    border: 0.018em solid rgb(184, 168, 240);
     text-align: center;
     padding: 0.1em;
     font-size: 7em;
-    font-family: 'pencil';
-    color: #2d3c5e;
+    font-family: 'pencil', sans-serif;
+    color: #5f5f5f;
     user-select: none;
 }
 
@@ -162,22 +166,22 @@ input#player1.playersInput {
     font-size: 36px;
     margin: 0.65em;
     font-weight: bold;
-    color: darkblue;
+    color: #595280;
 }
 
 .restartBtn {
-    width: 6em;
-    height: 2.5em;
-    background: #3148af;
+    width: 5em;
+    height: 2.3em;
+    background: #595280;
     color: #ededed;
     box-shadow: 4px 4px gray;
     border: 0;
-    font-size: 18px;
-    font-family: cursive;
+    font-size: 20px;
+    font-family: 'handwritten', cursive;
     border-radius: 5px;
 }
 
 .restartBtn:hover {
     cursor: pointer;
-    background: #193277;
+    background: #3f3a61;
 }

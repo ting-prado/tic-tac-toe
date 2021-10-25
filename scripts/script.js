@@ -284,7 +284,7 @@ const displayChanges = (() => {
         playersDiv.appendChild(startBtn);
 
         startBtn.addEventListener('click', function(){
-            if(player1.value != "" || player2.value != ""){
+            if(player1.value != "" && player2.value != ""){
                 playersGameflow();
             }
             else {
