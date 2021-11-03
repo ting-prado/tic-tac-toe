@@ -37,7 +37,7 @@ const Player = (name,sign) => {
     return {getName, getSign, drawSign}
 }
 
-const endGame = winner => {
+const endGame = (gameMode, winner) => {
     const title = document.querySelector('h1');
     const body = document.querySelector('body');
 
@@ -49,7 +49,13 @@ const endGame = winner => {
         }
         gameboard.updateGameboard();
         won = false;
-        playersGameflow();
+
+        if(gameMode == 'vsplayers'){
+            playersGameflow();
+        }
+        else {
+            aiGameflow();
+        }
 
         const div = document.getElementById('gameoverDiv');
         div.remove();
@@ -71,7 +77,7 @@ const endGame = winner => {
         restartBtn.classList.add('restartBtn');
         par.classList.add('resultMessage');
 
-        if(winner != undefined) {
+        if(winner != "") {
             par.textContent = `${winner} won!`;
         }
         else{
@@ -86,21 +92,21 @@ const endGame = winner => {
     })();
 }
 
-const winnerChecker = (round, name) => {
+const winnerChecker = (gamemode, round, name) => {
     let sequence = '';
 
     const checkStr = str => {
         if(str == 'XXX' || str == 'OOO'){
             won = true;
             if(won == true){
-                endGame(name);
+                endGame(gamemode, name);
             }
         }
     }
 
     if(won == false && round == 9){ //Game tied
         won = 'tied';
-        endGame();
+        endGame(gamemode, "");
     }
 
     for(let i=0; i<=2; i++){ //Horizontal checker
@@ -133,7 +139,7 @@ const winnerChecker = (round, name) => {
 }
 
 const aiGameflow = () => {
-const displayChanges = (() => {
+    const displayChanges = (() => {
         const players = document.querySelector('.playerNamesCont');
         players.setAttribute('style', 'display: none');
         gameboard.board.setAttribute('style', 'display: flex');
@@ -141,29 +147,54 @@ const displayChanges = (() => {
 
     const player = Player(document.querySelector('#player').value, 'X');
     const computer = Player('Computer', 'O');
+    let round = 1,
+    let board = gameboard.boardArr,
+        gameMode = 'vsai';
 
-    const playerDraw = e => {
+    const playerTurn = e => {
         let row = e.target.id.slice(3,4);
         let column = e.target.id.slice(4,5);
-        let board = gameboard.boardArr;
-        if(board[row][column] == undefined){
+        if(board[row][column] == ""){
             player.drawSign(row, column, player.getSign());
             gameboard.updateGameboard();
-            winnerChecker(round, player.getName());
+            winnerChecker(gameMode, round, player.getName());
+            ++round;
+            setTimeout(aiTurn, 1000);
+            winnerChecker(gameMode, round, computer.getName());
+            ++round;
+            if(won == true || won == 'tied') {
+                gameboard.gridboxes.forEach(box => {
+                    box.removeEventListener('click', playerTurn);
+                });
+            }
         }
     }
 
-    const aiDraw = () => {
-        //get index through minimax algorithm
+    const aiTurn = () => {
+        //get best move index through minimax algorithm
+        let bestScore = -Infinity,
+            bestMove;
+        for(let i=0; i<=2; i++){ //Check which are empty in the array
+            for(let j=0; j<=2; j++){
+                if(board[i][j] == ""){
+                    board[i][j] = computer.getSign();
+                    let score = minimax(board);
+                    board[i][j] = "";
+                    if(score > bestScore){
+                        bestScore = score;
+                        bestMove = {i,j};
+                    }
+                }
+            }
+        }
         //drawSign
-        //push sign to array
-        //wait for 1s to update gameboard
-        //winner checker
+        computer.drawSign(bestMove.i, bestMove.j, computer.getSign());
+        //update gameboard
+        gameboard.updateGameboard();
     }
 
     gameboard.gridboxes.forEach(box => {
-        box.addEventListener('click', playerDraw);
-        box.addEventListener('click', aiDraw);
+        box.addEventListener('click', playerTurn);
     });
 }
 
@@ -184,7 +215,8 @@ const playersGameflow = () => {
     const player1 = Player(getNames.input1, 'X');
     const player2 = Player(getNames.input2, 'O');
     let currentPlayer = player1,
-        round = 1;
+        round = 1,
+        gameMode = 'vsplayers';
 
     const drawBoard = e => {
         let row = e.target.id.slice(3,4);
@@ -193,7 +225,7 @@ const playersGameflow = () => {
         if(board[row][column] == ""){
             currentPlayer.drawSign(row, column, currentPlayer.getSign());
             gameboard.updateGameboard();
-            winnerChecker(round, currentPlayer.getName());
+            winnerChecker(gameMode, round, currentPlayer.getName());
             round++;
             if(won == true || won == 'tied') {
                 gameboard.gridboxes.forEach(box => {

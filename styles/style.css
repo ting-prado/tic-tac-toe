@@ -123,7 +123,7 @@ input#player1.playersInput {
 
 .box {
     background: url('../resources/5d2ad0ffb80190c521443db7a21e63.jpg');
-    background-position: 13.5% 3.5%;
+    background-position: 13.5% 0;
     box-sizing: border-box;
     width: calc(100%/3);
     height: calc(75vh/3);
