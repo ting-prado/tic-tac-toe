@@ -148,7 +148,7 @@ const aiGameflow = () => {
     const player = Player(document.querySelector('#player').value, 'X');
     const computer = Player('Computer', 'O');
     let round = 1,
-    let board = gameboard.boardArr,
+        board = gameboard.boardArr,
         gameMode = 'vsai';
 
     const playerTurn = e => {
@@ -159,9 +159,15 @@ const aiGameflow = () => {
             gameboard.updateGameboard();
             winnerChecker(gameMode, round, player.getName());
             ++round;
-            setTimeout(aiTurn, 1000);
-            winnerChecker(gameMode, round, computer.getName());
-            ++round;
+            if(won == false){
+                setTimeout(aiTurn, 1000);
+                document.querySelector('#gameboard').style.cursor = 'wait';
+                document.querySelector('body').style.cursor = 'wait';
+                setTimeout(function(){
+                    document.querySelector('#gameboard').style.cursor = 'pointer';
+                    document.querySelector('body').style.cursor = 'auto';
+                }, 1000);
+            }
             if(won == true || won == 'tied') {
                 gameboard.gridboxes.forEach(box => {
                     box.removeEventListener('click', playerTurn);
@@ -173,9 +179,14 @@ const aiGameflow = () => {
     const aiTurn = () => {
         //get best move index through minimax algorithm
         let bestScore = -Infinity,
-            bestMove;
-        for(let i=0; i<=2; i++){ //Check which are empty in the array
-            for(let j=0; j<=2; j++){
+            bestMove, i, j;
+
+        const minimax = board => {
+            return 1;
+        }
+
+        for(i=0; i<=2; i++){ //Check which are empty in the array
+            for(j=0; j<=2; j++){
                 if(board[i][j] == ""){
                     board[i][j] = computer.getSign();
                     let score = minimax(board);
@@ -187,10 +198,10 @@ const aiGameflow = () => {
                 }
             }
         }
-        //drawSign
         computer.drawSign(bestMove.i, bestMove.j, computer.getSign());
-        //update gameboard
         gameboard.updateGameboard();
+        winnerChecker(gameMode, round, computer.getName());
+        ++round;
     }
 
     gameboard.gridboxes.forEach(box => {

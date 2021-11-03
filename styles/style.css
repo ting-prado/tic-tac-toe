@@ -119,6 +119,7 @@ input#player1.playersInput {
     margin: 0.8em auto 0 auto;
     display: none;
     flex-wrap: wrap;
+    cursor: pointer;
 }
 
 .box {
@@ -142,7 +143,7 @@ input#player1.playersInput {
     align-items: center;
     animation-name: fade;
     animation-duration: 1.2s;
-    width: 15em;
+    width: 16em;
     height: 10em;
     background: #ededed;
     box-shadow: 6px 6px 4px gray;
