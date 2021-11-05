@@ -1,5 +1,4 @@
 let won = false,
-    winner,
     round = 1;
 
 const gameboard = (() => {
