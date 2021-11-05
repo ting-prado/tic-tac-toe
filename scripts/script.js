@@ -1,4 +1,5 @@
-let won = false;
+let won = false,
+    round = 1;
 
 const gameboard = (() => {
     const boardArr = [
@@ -154,7 +155,7 @@ const aiGameflow = () => {
             winStatus();
             ++round;
 
-            if(won == false){
+            if(won == false && round<9){
                 setTimeout(aiTurn, 1000);
                 document.querySelector('#gameboard').style.cursor = 'wait';
                 document.querySelector('body').style.cursor = 'wait';
@@ -162,12 +163,6 @@ const aiGameflow = () => {
                     document.querySelector('#gameboard').style.cursor = 'pointer';
                     document.querySelector('body').style.cursor = 'auto';
                 }, 1000);
-            }
-
-            if(won == true || won == 'tied') {
-                gameboard.gridboxes.forEach(box => {
-                    box.removeEventListener('click', playerTurn);
-                });
             }
         }
     }
@@ -206,9 +201,15 @@ const aiGameflow = () => {
     const winStatus = () => {
         if(won){
             endGame(gameMode, currentPlayer.getName());
+            gameboard.gridboxes.forEach(box => {
+                box.removeEventListener('click', playerTurn);
+            });
         }
-        else if(won == 'tied' && round == 9){
+        else if(won == false && round == 9){
             endGame(gameMode, "");
+            gameboard.gridboxes.forEach(box => {
+                box.removeEventListener('click', playerTurn);
+            });
         }
         else return;
     }
