@@ -143,13 +143,16 @@ input#player1.playersInput {
     align-items: center;
     animation-name: fade;
     animation-duration: 1.2s;
-    width: 16em;
-    height: 10em;
+    width: 20em;
+    height: auto;
     background: #ededed;
     box-shadow: 6px 6px 4px gray;
     top: 30vh;
-    left: 40%;
     position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
     border-radius: 5px;
 }
 
@@ -180,6 +183,7 @@ input#player1.playersInput {
     font-size: 20px;
     font-family: 'handwritten', cursive;
     border-radius: 5px;
+    margin-bottom: 1em;
 }
 
 .restartBtn:hover {
