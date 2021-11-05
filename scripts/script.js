@@ -1,4 +1,5 @@
 let won = false,
+    winner,
     round = 1;
 
 const gameboard = (() => {
@@ -50,6 +51,7 @@ const endGame = (gameMode, winner) => {
         }
         gameboard.updateGameboard();
         won = false;
+        round = 1;
 
         if(gameMode == 'vsplayers'){
             playersGameflow();
@@ -96,6 +98,10 @@ const endGame = (gameMode, winner) => {
 const winnerChecker = () => {
     let sequence = '';
 
+    if(round == 9 && won == false){
+        won = 'tied';
+    }
+
     const checkStr = str => {
         if(str == 'XXX' || str == 'OOO'){
             won = true;
@@ -140,8 +146,7 @@ const aiGameflow = () => {
 
     const player = Player(document.querySelector('#player').value, 'X');
     const computer = Player('Computer', 'O');
-    let round = 1,
-        board = gameboard.boardArr,
+    let board = gameboard.boardArr,
         currentPlayer = player,
         gameMode = 'vsai';
 
@@ -153,7 +158,7 @@ const aiGameflow = () => {
             gameboard.updateGameboard();
             winnerChecker();
             winStatus();
-            ++round;
+            round++;
 
             if(won == false && round<9){
                 setTimeout(aiTurn, 1000);
@@ -169,43 +174,39 @@ const aiGameflow = () => {
 
     const aiTurn = () => {
         currentPlayer = computer;
-        //get best move index through minimax algorithm
-        let bestScore = -Infinity,
-            bestMove;
+        //Chooses random index for next move
+        let possibleMoves = [];
 
-        const minimax = (board) => {
-            return 1;
-        }
-
-        for(let i=0; i<=2; i++){ //Check which are empty in the array
+        for(let i=0; i<=2; i++){ //Check which are empty in the board array
             for(let j=0; j<=2; j++){
                 if(board[i][j] == ""){
-                    board[i][j] = computer.getSign();
-                    let score = minimax(board);
-                    board[i][j] = "";
-                    if(score > bestScore){
-                        bestScore = score;
-                        bestMove = {i,j};
-                    }
+                    possibleMoves.push({i,j});
                 }
             }
         }
-        computer.drawSign(bestMove.i, bestMove.j, computer.getSign());
+
+        const random = array => {
+            console.log(array);
+            return array[Math.floor(Math.random() * array.length)];
+        }
+
+        let nextMove = random(possibleMoves);
+        computer.drawSign(nextMove.i, nextMove.j, computer.getSign());
         gameboard.updateGameboard();
         winnerChecker();
         winStatus();
-        ++round;
         currentPlayer = player;
+        round++;
     }
 
     const winStatus = () => {
-        if(won){
+        if(won == true){
             endGame(gameMode, currentPlayer.getName());
             gameboard.gridboxes.forEach(box => {
                 box.removeEventListener('click', playerTurn);
             });
         }
-        else if(won == false && round == 9){
+        else if(won == 'tied'){
             endGame(gameMode, "");
             gameboard.gridboxes.forEach(box => {
                 box.removeEventListener('click', playerTurn);
@@ -236,7 +237,6 @@ const playersGameflow = () => {
     const player1 = Player(getNames.input1, 'X');
     const player2 = Player(getNames.input2, 'O');
     let currentPlayer = player1,
-        round = 1,
         gameMode = 'vsplayers';
 
     const drawBoard = e => {
@@ -249,11 +249,10 @@ const playersGameflow = () => {
             winnerChecker();
 
             const winStatus = (() => {
-                if(won) {
+                if(won == true) {
                     endGame(gameMode, currentPlayer.getName());
                 }
-                else if(won == false && round == 9){ //Game tied
-                    won = 'tied';
+                else if(won == 'tied'){ //Game tied
                     endGame(gameMode, "");
                 }
             })();
